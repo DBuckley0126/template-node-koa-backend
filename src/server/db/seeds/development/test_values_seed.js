@@ -1,6 +1,6 @@
-exports.seed = (knex, Promise) =>
-  knex("test_values")
-    .del()
+exports.seed = (knex, Promise) => {
+  return knex("test_values")
+    .delete()
     .then(() =>
       knex("test_values").insert({
         integer: 10
@@ -15,4 +15,5 @@ exports.seed = (knex, Promise) =>
       knex("test_values").insert({
         integer: 100
       })
-    )
+    );
+};

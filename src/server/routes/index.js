@@ -4,6 +4,6 @@ const indexControllers = require("../controllers/index");
 
 const router = new Router();
 
-router.get("/", indexControllers.index);
+router.get("/api/v1/", indexControllers.index);
 
 module.exports = router;

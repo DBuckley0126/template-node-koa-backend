@@ -1,6 +1,10 @@
-const terminalDisplay = (message, end) => {
-  console.log("//////////ERROR////////////");
-  console.log(message);
+const terminalDisplay = (err, end) => {
+  console.error("//////////ERROR////////////");
+  console.error(err.message);
+  // dont log full error if in production enviroment
+  if (process.env.NODE_ENV !== "production") {
+    console.error(err);
+  }
 
   if (end) {
     process.exit();
@@ -11,21 +15,21 @@ const errorManager = {
   handleError: err => {
     switch (true) {
       case err.code === "ENOTFOUND":
-        terminalDisplay("Failed to fetch URL", err, true);
+        terminalDisplay(err, true);
         break;
       case err.code === "LDA_FAIL":
-        terminalDisplay(err.message, false);
+        terminalDisplay(err, false);
         break;
       case err.code === "REQUEST_FAIL":
-        terminalDisplay(err.message, false);
+        terminalDisplay(err, false);
         break;
       case err.code === "RESPONSE_ERROR":
         break;
       case !!err.message:
-        terminalDisplay(err.message, true);
+        terminalDisplay(err, true);
         break;
       default:
-        terminalDisplay("Unknown Error", true);
+        terminalDisplay({ message: "Unknown Error", error: {} }, true);
     }
   },
   terminalDisplay,
